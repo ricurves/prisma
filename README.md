@@ -1,12 +1,8 @@
-Prisma 2.4 Application 
-======================
+Prisma 2.4 
+==========
 
-Yii 2 Basic Application Template is a skeleton Yii 2 application best for
-rapidly creating small projects.
-
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+Prisma stands for Project Index and Schedule Management. Its bassicaly used for managing projects or tasks.
+This is the third verion of this app.
 
 
 DIRECTORY STRUCTURE
@@ -48,9 +44,9 @@ Edit the file `config/db.php` with real data, for example:
 ```php
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+    'dsn' => 'pgsql:host=localhost;port=5432;dbname=prisma',
     'username' => 'root',
-    'password' => '1234',
+    'password' => '',
     'charset' => 'utf8',
 ];
 ```
