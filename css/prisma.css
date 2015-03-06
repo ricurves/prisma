@@ -1,0 +1,43 @@
+.rinav{
+	min-height: 40px;
+	height: 40px;
+	width: 100%;
+	background: #B30000;
+}
+
+.rinav .container{
+	width: 100%;
+	border-color: #f00;
+}
+
+.rinav .navbar-brand{
+	padding: 0 20px;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 40px;
+	color: #FFFFFF;
+}
+
+.rinav .navbar-brand:hover{
+	color: #FFFFFF;
+}
+
+.rinav .navbar-nav > li > a{
+	padding-top: 0;
+	padding-bottom: 0px;
+	line-height: 40px;
+	color: #FFFFFF;
+	background: #B30000;
+}
+
+.rinav .navbar-nav > li > a:hover{
+	color: #FFFFFF;
+	background: #960000;
+}
+
+.rinav .navbar-nav > .active > a{
+	color: #FFFFFF;
+	background: #960000;
+}
+
+
