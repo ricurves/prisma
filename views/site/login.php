@@ -1,46 +1,99 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
+use app\assets\AppAsset;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+/* @var $this \yii\web\View */
+/* @var $content string */
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+AppAsset::register($this);
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title>Prisma 2.4 Login Page</title>
+	<?php $this->head() ?>
+	<link href="<?= Url::base() ?>/css/login.css" rel="stylesheet">
 
-    <p>Please fill out the following fields to login:</p>
-
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'options' => ['class' => 'form-horizontal'],
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'username') ?>
-
-    <?= $form->field($model, 'password')->passwordInput() ?>
-
-    <?= $form->field($model, 'rememberMe', [
-        'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-    ])->checkbox() ?>
-
-    <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+</head>
+<body>
+	
+<?php $this->beginBody() ?>
+    <div class="login-container">
+        <div class="col-md-8 leftside">
+            <div class="login-image">
+                <img src="<?= Url::base() ?>/images/login/login-image.png">
+                <h4 class="title"><?php echo $title;?></h4>
+            </div>
+            <div class="login-client">
+                <div class="client-logo"><img src="<?= Url::base() ?>/images/client-logo.png" alt="" style="width:60px;height:60px;"></div>
+                <h2>PRISMA 2.4</h2>
+                <p>Project Indexs and Scheduling Management</p>
+            </div>
         </div>
+        <div class="col-md-4 rightside">
+
+            <div class="heading">
+                <h3>User Login</h3>
+            </div>
+            <div class="notice">
+                Please enter <strong>username</strong> and <strong>password</strong> to login to system!
+            </div>
+            
+            <?php $form = ActiveForm::begin(['id' => 'login-form',]); ?>
+            
+                <div class="form-group">
+                    <div class="input-bg">
+                        <i class="go go-person icon"></i>
+                        <?= 
+                        	$form->field($model, 'username', [
+                        		'inputOptions' => [
+                        			'class' => 'form-control',
+                        			'placeholder' => 'Username',
+                        			],
+                        		])
+                        	->label(false); 
+                        ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-bg">
+                        <i class="go go-lock icon"></i>
+                        <?= 
+                        	$form->field($model, 'password', [
+                        		'inputOptions' => [
+                        			'class' => 'form-control',
+                        			'placeholder' => 'Password',
+                        			],
+                        		])
+                        	->label(false)
+							->passwordInput(); 
+                        ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6" style="padding-left:5px;">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In <i class="go go-arrow-forward"></i></button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+          	
+          	<?php ActiveForm::end(); ?>
+          	
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="footer">
+        <img src="<?= Url::base() ?>/images/footer.png">
     </div>
 
-    <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
-</div>
+<?php $this->endBody() ?>    
+</body>
+</html>
+<?php $this->endPage() ?>
