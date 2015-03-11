@@ -1,0 +1,66 @@
+@media (max-width: 768px) {
+	.visible-xs{
+		display: block!important;
+	}
+	.navbar-collapse.collapse{
+		display: none!important;
+	}
+	#jmc_navbar{
+		z-index: 9999;
+	} 
+	.app-logo{
+		position: relative!important;
+	}
+	.app-logo a{
+		font-size: 12px;
+	}
+	.breadcrumb{
+		display: none;
+	}
+	.layout{
+		position: relative!important;
+		top:auto!important;left:auto!important;bottom:auto!important;right:auto!important;
+	}
+	.topnav{
+		height: auto;
+		display: none;	
+	}
+	.topnav ul li{
+		float: none;
+	}
+	.topnav ul li a{
+		margin:0px;
+		padding:10px;
+		border-radius: 0px;
+		background: none!important;
+		color:#fff!important;
+	}
+	.topnav ul li a:active{
+		background: rgba(0,0,0,0.4)!important;
+	}
+	.topnav ul li a i{
+		float: right;
+	}
+	.topnav ul li ul{
+		position: relative;
+		top:auto;left:auto;
+		background: rgba(0,0,0,0.2)!important;
+		box-shadow: 0px 0px 0px #000;
+	}
+	.topnav ul li ul::before{
+		display: none;
+	}
+	.panel .btn,
+	.panel .inputbox,
+	.panel select{
+		margin-bottom: 5px;
+	}
+	.inputbox,.chosen-container,select,textarea{
+		max-width: 100%;
+	}
+	.content-sidebar{
+		position: relative!important;
+		width:100%!important;
+		display: none;
+	}
+}

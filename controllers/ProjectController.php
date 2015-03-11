@@ -34,6 +34,9 @@ class ProjectController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Project::find(),
+            'pagination' => [
+		        'pageSize' => 5,
+		    ],
         ]);
 
         return $this->render('index', [

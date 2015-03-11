@@ -19,6 +19,8 @@ AppAsset::register($this);
     <title>Prisma 2.4 Login Page</title>
 	<?php $this->head() ?>
 	<link href="<?= Url::base() ?>/css/login.css" rel="stylesheet">
+    <!-- PLUGINS FONTAWESOME -->
+    <link rel="stylesheet" type="text/css" href="<?= Url::base() ?>/plugins/font-awesome/css/font-awesome.min.css"/>
 
 </head>
 <body>
@@ -49,7 +51,7 @@ AppAsset::register($this);
             
                 <div class="form-group">
                     <div class="input-bg">
-                        <i class="go go-person icon"></i>
+                        <i class="fa fa-user icon"></i>
                         <?= 
                         	$form->field($model, 'username', [
                         		'inputOptions' => [
@@ -63,7 +65,7 @@ AppAsset::register($this);
                 </div>
                 <div class="form-group">
                     <div class="input-bg">
-                        <i class="go go-lock icon"></i>
+                        <i class="fa fa-lock icon"></i>
                         <?= 
                         	$form->field($model, 'password', [
                         		'inputOptions' => [
