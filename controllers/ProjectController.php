@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @author Punto Aji <punto@jogjamedia.co.id>
+ * @copyright Copyright (c) 2015 JMC IT Consultant
+ * @link http://www.jogjamedia.co.id
+ */
+ 
 namespace app\controllers;
 
 use Yii;
@@ -32,15 +37,13 @@ class ProjectController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Project::find(),
-            'pagination' => [
-		        'pageSize' => 5,
-		    ],
-        ]);
-
+        $model = new Project();
+		
+		if (Yii::$app->request->post())
+			Yii::$app->session['cari'] = null;
+		
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

@@ -3,10 +3,11 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'prisma',
+    'version' => '2.4',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'language' => 'en',
+    'language' => 'en-US',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -16,7 +17,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Identity',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [

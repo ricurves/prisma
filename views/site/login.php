@@ -21,7 +21,13 @@ AppAsset::register($this);
 	<link href="<?= Url::base() ?>/css/login.css" rel="stylesheet">
     <!-- PLUGINS FONTAWESOME -->
     <link rel="stylesheet" type="text/css" href="<?= Url::base() ?>/plugins/font-awesome/css/font-awesome.min.css"/>
-
+	
+	<script language="JavaScript">
+		$(function () {
+			$('#loginform-username').focus();
+		});
+	</script>
+	
 </head>
 <body>
 	

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @author Punto Aji <punto@jogjamedia.co.id>
+ * @copyright Copyright (c) 2015 JMC IT Consultant
+ * @link http://www.jogjamedia.co.id
+ */
+ 
 namespace app\controllers;
 
 use Yii;

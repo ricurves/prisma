@@ -1,8 +1,15 @@
 <?php
-
+/**
+ * @author Punto Aji <punto@jogjamedia.co.id>
+ * @copyright Copyright (c) 2015 JMC IT Consultant
+ * @link http://www.jogjamedia.co.id
+ */
+ 
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "project".
@@ -19,7 +26,7 @@ use Yii;
  * @property Plan[] $plans
  * @property Reality[] $realities
  */
-class Project extends \yii\db\ActiveRecord
+class Project extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -89,4 +96,19 @@ class Project extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Reality::className(), ['id_project' => 'id']);
     }
+	
+	/**
+     * Creates data provider instance with search query applied
+     * @return ActiveDataProvider
+     */
+     public function search()
+	 {
+	 	$query = self::find();
+		
+		$dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+		
+		return $dataProvider;
+	 }
 }

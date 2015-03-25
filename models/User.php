@@ -1,10 +1,14 @@
 <?php
-
+/**
+ * @author Punto Aji <punto@jogjamedia.co.id>
+ * @copyright Copyright (c) 2015 JMC IT Consultant
+ * @link http://www.jogjamedia.co.id
+ */
+ 
 namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -28,7 +32,7 @@ use yii\web\IdentityInterface;
  * @property Job $idJob
  * @property Notes[] $notes
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -136,70 +140,4 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(Notes::className(), ['id_user' => 'id']);
     }
 	
-	
-	/***************************************************************************************
-	 * Implement IdentityInterface
-	 **************************************************************************************/
-	
-	/**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return self::findOne([$id]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param  string      $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return self::findOne(['username' => $username]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return null;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param  string  $password password to validate
-     * @return boolean if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === md5($password);
-    }
 }

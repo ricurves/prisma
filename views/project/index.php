@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
+use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -30,29 +31,48 @@ $this->params['breadcrumbs'][] = $this->title;
             <a href="#" class="btn btn-primary" onclick="addModal();return false;"><i class="fa fa-plus"></i> Add New Project</a>
         </div>
         <div class="pull-right">
-            <select class="chosen-select" data-placeholder="Select Year..." style="width: 120px;">
-                <option value=""></option>
+        	
+        	<?php $form = ActiveForm::begin(['layout' => 'inline']); ?>
+            <select class="chosen-select" data-placeholder="Select Year..." style="width: 80px;">
                 <option>2015</option>
                 <option>2014</option>
                 <option>2013</option>
             </select>
+            
+            <?= 
+            	$form->field($model, 'nama')
+            		->textInput(['style' => 'width:180px', 'placeholder' => 'Pencarian...', 'class' => 'inputbox'])
+            		->label(false); 
+            ?>
+            
+            <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-search"></i> Cari</button>
+        	<?php ActiveForm::end(); ?>
+        
         </div>
         <div class="clearfix"></div>
     </div>
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'layout' =>'{items}\n{pager}\n{summary}',
+        'dataProvider' => $model->search(),
+        'tableOptions' => ['class' => 'data table-strip'],
+        'options' => ['class' => 'layout layout-center'],
+        'layout' => Yii::$app->params['gridLayout'],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'tahun',
+            [
+            	'class' => 'yii\grid\SerialColumn',
+            	'header' => 'No',
+            	'contentOptions' => ['align' => 'right'],
+            	'headerOptions' => ['width' => '40'],
+            ],
+            [
+            	'attribute' => 'tahun',
+            	'headerOptions' => ['width' => '60'],
+            ],
+            [
+            	'attribute' => 'kode',
+            	'headerOptions' => ['width' => '100'],
+            ],
             'nama',
             'klien',
-            'kode',
-            // 'status',
-
-            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>
@@ -95,13 +115,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<link rel="stylesheet" type="text/css" href="plugins/chosen/chosen.css">
-<script type="text/javascript" src="plugins/chosen/chosen.jquery.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-        $('.chosen-select').chosen({disable_search_threshold: 10});
-    });
-</script>
 <script type="text/javascript">
     function addModal(){
         $('#add-modal').appendTo($('body')).modal();

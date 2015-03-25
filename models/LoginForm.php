@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @author Punto Aji <punto@jogjamedia.co.id>
+ * @copyright Copyright (c) 2015 JMC IT Consultant
+ * @link http://www.jogjamedia.co.id
+ */
+ 
 namespace app\models;
 
 use Yii;
@@ -68,7 +73,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Identity::findByUsername($this->username);
         }
 
         return $this->_user;

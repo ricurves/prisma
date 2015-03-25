@@ -36,6 +36,10 @@ AppAsset::register($this);
     <script src="<?= Url::base() ?>/js/bootstrap.min.js"></script>
     <script src="<?= Url::base() ?>/js/application.js"></script>
 
+    <!-- CHOSEN PLUGINS -->
+    <link rel="stylesheet" type="text/css" href="<?= Url::base() ?>/plugins/chosen/chosen.css">
+	<script type="text/javascript" src="<?= Url::base() ?>/plugins/chosen/chosen.jquery.min.js"></script>
+    
     <!-- PACE PLUGINS -->
     <link rel="stylesheet" type="text/css" href="<?= Url::base() ?>/plugins/pace/pace.minimal.css"/>
     <script type="text/javascript" src="<?= Url::base() ?>/plugins/pace/pace.min.js"></script>
@@ -57,7 +61,7 @@ AppAsset::register($this);
             <div class="mobile-menu-left visible-xs">
                 <a href="#" class="btn btn-trans-white btn-icon mobile-menu-toggler" onclick="$('.topnav').toggle();"><i class="fa fa-bars"></i></a>
             </div>
-            <a href="#">PRISMA 2.4</a>
+            <a href="#">Prototype 2.4</a>
         </div>
         <ul class="nav navbar-nav navbar-left navbar-collapse collapse">
             <li><a href="#" class="sidebar-toggler"><i class="fa fa-bars"></i></a></li>
@@ -108,8 +112,9 @@ AppAsset::register($this);
         
         <div class="sidebar-profile layout layout-north">
 		    <div class="avatar"><img class="img-responsive" src="<?= Url::base() ?>/images/avatar/avatar.jpg"></div>
-		    <h4>Bima Setiaji L</h4>
-		    <small class="title">System Analyst</small>
+		    <h4><?= Html::encode(Yii::$app->user->identity->nama) ?></h4>
+		    <small class="title"><?= Html::encode(Yii::$app->user->identity->job) ?></small>
+		    <small class="title"><?= Html::encode(Yii::$app->user->identity->divisi) ?></small>
 		</div>
 		<div class="layout layout-center scroll">
 		<ul class="nav nav-sidebar">

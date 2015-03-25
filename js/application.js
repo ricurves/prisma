@@ -12,23 +12,38 @@ $(function jmcScript(){
 
 });
 $(function layout(){
-	$('.layout').each(function(){	
+	if (parseInt($(window).width()) > 768){
+		reLayout();
+	}
+	function reLayout(){
+		$('.layout').each(function(){	
 
-		var north 	= $(this).children('.layout-north').outerHeight() || 0,
-			south	= $(this).children('.layout-south').outerHeight() || 0,
-			east	= $(this).children('.layout-east').outerWidth() || 0,
-			west	= $(this).children('.layout-west').outerWidth() || 0;
+			var north 	= $(this).children('.layout-north').outerHeight() || 0,
+				south	= $(this).children('.layout-south').outerHeight() || 0,
+				east	= $(this).children('.layout-east').outerWidth() || 0,
+				west	= $(this).children('.layout-west').outerWidth() || 0;
 
-		$(this).children('.layout-center').css({'top':north, 'right':east, 'bottom':south, 'left':west});
-		$(this).children('.layout-west').css({'top':north, 'bottom':south});
-		$(this).children('.layout-east').css({'top':north, 'bottom':south});
-
-	});
+			$(this).children('.layout-center').css({'top':north, 'right':east, 'bottom':south, 'left':west});
+			$(this).children('.layout-west').css({'top':north, 'bottom':south});
+			$(this).children('.layout-east').css({'top':north, 'bottom':south});
+		});
+		
+		/*$('.pagination,.summary').wrapAll('<div class="layout layout-south pane"></div>');
+		$('.pagination').wrap('<div class="pull-left"></div>');
+		$('.summary').wrap('<div class="pull-right"><p></p></div>');
+		$('#contentpane .grid-view').addClass('layout layout-center');
+		$('#contentpane .grid-view table').wrapAll('<div class="layout layout-center scroll"></div>');*/
+	}
 });
 $(function checkAll(){
   $('.checkall').click(function () {
 		$(this).parents('table').find(':checkbox').attr('checked', this.checked);
 	});
+});
+
+/* Chosen */
+$(function(){
+    $('.chosen-select').chosen({disable_search_threshold: 10});
 });
 
 /* Sidebar Toggler */
@@ -38,7 +53,7 @@ $(function(){
 			$('body').removeClass('fullpage');
 			$(this).children('.fa').removeClass('fa-arrow-down').addClass('fa-bars');
 		} else {
-			$('body').addClass('fullpage');
+			$('body').addClass('fullpage in');
 			$(this).children('.fa').removeClass('fa-bars').addClass('fa-arrow-down');
 		}
 	});
