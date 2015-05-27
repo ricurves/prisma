@@ -20,7 +20,6 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="<?= Url::base() ?>/css/prisma.css" rel="stylesheet">
 
     <!-- PLUGINS FONTAWESOME -->
     <link rel="stylesheet" type="text/css" href="<?= Url::base() ?>/plugins/font-awesome/css/font-awesome.min.css"/>
@@ -33,7 +32,6 @@ AppAsset::register($this);
 	
 	<!-- MAIN LIBRARY -->
     <script src="<?= Url::base() ?>/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="<?= Url::base() ?>/js/bootstrap.min.js"></script>
     <script src="<?= Url::base() ?>/js/application.js"></script>
 
     <!-- CHOSEN PLUGINS -->
@@ -47,9 +45,6 @@ AppAsset::register($this);
     <!-- SWEET ALERT PLUGINS -->
     <link rel="stylesheet" type="text/css" href="<?= Url::base() ?>/plugins/sweet-alert/sweet-alert.css"/>
     <script type="text/javascript" src="<?= Url::base() ?>/plugins/sweet-alert/sweet-alert.min.js"></script>
-
-    <!-- SLIMSCROLL PLUGINS -->
-    <script type="text/javascript" src="<?= Url::base() ?>/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
 </head>
 
@@ -111,7 +106,9 @@ AppAsset::register($this);
     <div id="jmc_sidebar" class="layout layout-west">
         
         <div class="sidebar-profile layout layout-north">
-		    <div class="avatar"><img class="img-responsive" src="<?= Url::base() ?>/images/avatar/avatar.jpg"></div>
+		    <div class="avatar">
+		    	<img class="img-responsive" src="<?= Url::base() ?>/images/avatar/<?= Html::encode(Yii::$app->user->identity->foto) ?>">
+		    </div>
 		    <h4><?= Html::encode(Yii::$app->user->identity->nama) ?></h4>
 		    <small class="title"><?= Html::encode(Yii::$app->user->identity->job) ?></small>
 		    <small class="title"><?= Html::encode(Yii::$app->user->identity->divisi) ?></small>
@@ -121,10 +118,11 @@ AppAsset::register($this);
 		    <li><a href="admin.php"><img class="icon" src="<?= Url::base() ?>/images/icon/home.png"> Dashboard</a></li>
 		    <li><a href="admin.php?page=plan"><img class="icon" src="<?= Url::base() ?>/images/icon/calendar-month.png"> Plan</a></li>
 		    <li><a href="admin.php"><img class="icon" src="<?= Url::base() ?>/images/icon/category.png"> Tasks</a></li>
-		    <li><a href="admin.php"><img class="icon" src="<?= Url::base() ?>/images/icon/briefcase.png"> Project</a></li>
 		    <li class="divider"></li>
+		    <li><a href="admin.php"><img class="icon" src="<?= Url::base() ?>/images/icon/briefcase.png"> Project</a></li>
 		    <li><a href="admin.php"><img class="icon" src="<?= Url::base() ?>/images/icon/users.png"> Resource</a></li>
 		    <li><a href="admin.php"><img class="icon" src="<?= Url::base() ?>/images/icon/report.png"> Report</a></li>
+		    <li class="divider"></li>
 		    <li><a href="#"><img class="icon" src="<?= Url::base() ?>/images/icon/books.png"> Reference <i class="fa fa-chevron-right pull-right"></i></a>
 		        <ul>
 		            <li><a href="<?= Url::to(['project/index']) ?>">Project</a></li>

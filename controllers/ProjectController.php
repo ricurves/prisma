@@ -9,10 +9,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Project;
+use app\models\Tahun;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\filters\AccessControl;
+use yii\bootstrap\ActiveForm;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -22,10 +25,13 @@ class ProjectController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -38,12 +44,22 @@ class ProjectController extends Controller
     public function actionIndex()
     {
         $model = new Project();
+		$yearModel = Tahun::find()->all();
 		
+		// if filter year haven't been set then set it with current year 
+		if(!isset(Yii::$app->session['filter_year']))
+			Yii::$app->session['filter_year'] = date('Y');
+		
+		// apply filter to the models
 		if (Yii::$app->request->post())
-			Yii::$app->session['cari'] = null;
-		
+		{
+			Yii::$app->session['filter_year'] = Yii::$app->request->post('filter_year');
+			Yii::$app->session['filter_key'] = Yii::$app->request->post('filter_key');
+		}
+			
         return $this->render('index', [
             'model' => $model,
+            'yearModel' => $yearModel,
         ]);
     }
 
@@ -67,11 +83,20 @@ class ProjectController extends Controller
     public function actionCreate()
     {
         $model = new Project();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+		
+		if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+		    Yii::$app->response->format = Response::FORMAT_JSON;
+		    $json = ActiveForm::validate($model);
+			
+			if($json == '[]') {
+				$model->save();
+				return $this->redirect(['index']);
+			}	
+			else 
+				return $json;
+			
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('form', [
                 'model' => $model,
             ]);
         }
@@ -88,9 +113,9 @@ class ProjectController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('form', [
                 'model' => $model,
             ]);
         }

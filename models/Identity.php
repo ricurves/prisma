@@ -18,6 +18,7 @@ class Identity extends Object implements IdentityInterface
 	public $job;
 	public $jobColor;
 	public $divisi;
+	public $foto;
 
     private static $_user;
 
@@ -27,6 +28,9 @@ class Identity extends Object implements IdentityInterface
     public static function findIdentity($id)
     {
         $data = User::findOne($id);
+		
+		//set default profile picture
+		$data->foto = $data->foto ? $data->foto : 'default.png';
 						
         self::$_user = [
 			'id' => $data->id,
@@ -36,6 +40,7 @@ class Identity extends Object implements IdentityInterface
 			'job' => $data->idJob->nama,
 			'jobColor' => $data->idJob->warna,
 			'divisi' => $data->idDivisi->nama,
+			'foto' => $data->foto,
 		];
 		
 		return new static(self::$_user);

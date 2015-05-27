@@ -19,12 +19,13 @@ use yii\data\ActiveDataProvider;
  * @property string $nama
  * @property string $klien
  * @property string $kode
- * @property integer $status
+ * @property integer $id_status
  *
  * @property CommentBaru[] $commentBarus
  * @property Comment[] $comments
  * @property Plan[] $plans
  * @property Reality[] $realities
+ * @property ProjectStatus $idProjectStatus
  */
 class Project extends ActiveRecord
 {
@@ -42,8 +43,8 @@ class Project extends ActiveRecord
     public function rules()
     {
         return [
-            [['tahun', 'nama', 'klien'], 'required'],
-            [['tahun', 'status'], 'integer'],
+            [['tahun', 'nama', 'klien', 'kode', 'id_status'], 'required'],
+            [['tahun', 'id_status'], 'integer'],
             [['nama', 'klien'], 'string', 'max' => 100],
             [['kode'], 'string', 'max' => 20],
             [['kode'], 'unique']
@@ -57,11 +58,11 @@ class Project extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tahun' => 'Tahun',
-            'nama' => 'Nama',
-            'klien' => 'Klien',
-            'kode' => 'Kode',
-            'status' => 'Status',
+            'tahun' => 'Year',
+            'nama' => 'Project Name',
+            'klien' => 'Client Name',
+            'kode' => 'Project Code',
+            'id_status' => 'ID Status',
         ];
     }
 
@@ -98,12 +99,31 @@ class Project extends ActiveRecord
     }
 	
 	/**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdProjectStatus()
+    {
+        return $this->hasOne(ProjectStatus::className(), ['id' => 'id_status']);
+    }
+	
+	/**
      * Creates data provider instance with search query applied
      * @return ActiveDataProvider
      */
      public function search()
 	 {
+	 	$filter_key = strtolower(Yii::$app->session['filter_key']);
+		$filter_year = Yii::$app->session['filter_year'];
+		
 	 	$query = self::find();
+		
+		// apply filter to query
+		$query	->andFilterWhere(['tahun' => $filter_year])
+				->andFilterWhere(['or', 
+						['like', 'LOWER(nama)', $filter_key], 
+						['like', 'LOWER(kode)', $filter_key], 
+						['like', 'LOWER(klien)', $filter_key],
+				]);
 		
 		$dataProvider = new ActiveDataProvider([
             'query' => $query,

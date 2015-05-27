@@ -1,14 +1,28 @@
 <?php
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Modal;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 $this->title = 'Project';
 $this->params['breadcrumbs'][] = $this->title;
+
+Modal::begin([
+    'header' => '<strong>Project Form</strong>',
+    'id' => 'modal',
+    'closeButton' => [],
+]);
+
+echo "<div id='modalContent'></div>";
+Modal::end();
+
 ?>
+
+
 <!-- BEGIN PAGE HEADER -->
 <div class="page-header layout layout-north">
     <div class="pull-left">
@@ -16,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="pull-right">
 
-        
         <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
@@ -28,25 +41,28 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="contentpane" class="layout layout-center">
     <div class="pane layout layout-north">
         <div class="pull-left">
-            <a href="#" class="btn btn-primary" onclick="addModal();return false;"><i class="fa fa-plus"></i> Add New Project</a>
+        	<?= Html::button('<i class="fa fa-plus"></i> Add New Project', ['value' => Url::to(['project/create']), 'class' => 'btn btn-primary', 'onclick' => 'showModal(this)']) ?>
         </div>
         <div class="pull-right">
         	
-        	<?php $form = ActiveForm::begin(['layout' => 'inline']); ?>
-            <select class="chosen-select" data-placeholder="Select Year..." style="width: 80px;">
-                <option>2015</option>
-                <option>2014</option>
-                <option>2013</option>
-            </select>
-            
-            <?= 
-            	$form->field($model, 'nama')
-            		->textInput(['style' => 'width:180px', 'placeholder' => 'Pencarian...', 'class' => 'inputbox'])
-            		->label(false); 
-            ?>
-            
-            <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-search"></i> Cari</button>
-        	<?php ActiveForm::end(); ?>
+            <?= Html::beginForm(Url::to(['project/index'])) ?>
+            	
+	            <?=
+	            	Html::dropDownList(
+	            		'filter_year',
+	            		Yii::$app->session['filter_year'],
+						ArrayHelper::map($yearModel, 'nama', 'nama'),
+						[
+							'class' => 'chosen-select',
+							'style' => 'width:80px',
+							'onchange' => '$(this).parent().submit()',
+						]
+					);
+	            ?>
+	            
+	            <input type="text" name="filter_key" style="width:200px" placeholder="Pencarian..." class="inputbox" value="<?= Yii::$app->session['filter_key'] ?>" />
+	            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Cari</button>
+            <?= Html::endForm() ?>
         
         </div>
         <div class="clearfix"></div>
@@ -64,6 +80,23 @@ $this->params['breadcrumbs'][] = $this->title;
             	'headerOptions' => ['width' => '40'],
             ],
             [
+            	'class' => 'yii\grid\ActionColumn',
+            	'header' => 'Aksi',
+            	'headerOptions' => ['width' => '60'],
+            	'contentOptions' => ['align' => 'center', 'class' => 'action'],
+            	'template' => '{update} {delete}',
+            	
+            	'buttons' => [
+            		'update' => function ($url, $model, $key){
+            			return Html::button('<i class="fa fa-edit"></i>', ['value' => $url, 'class' => 'btn btn-default', 'onclick' => 'showModal(this)']);
+            		},
+            		'delete' => function ($url, $model, $key){
+            			return Html::a('<i class="fa fa-trash-o"></i>', $url, ['class' => 'btn btn-default confirm', 'data-title' => 'Delete Data', 'tiltle' => 'Delete']);
+            		}
+            	]
+            	
+            ],
+            [
             	'attribute' => 'tahun',
             	'headerOptions' => ['width' => '60'],
             ],
@@ -75,48 +108,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'klien',
         ],
     ]); ?>
+    
 </div>
-
-<!-- Add Modal -->
-<div class="modal zoom" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add New Project</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form">
-                    <div class="form-group">
-                        <label>Year</label>
-                        <select class="form-control">
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                            <option>2012</option>
-                            <option>2011</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Client</label>
-                        <input type="text" class="inputbox form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Project</label>
-                        <input type="text" class="inputbox form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+		
 <script type="text/javascript">
-    function addModal(){
-        $('#add-modal').appendTo($('body')).modal();
-    }
+	function showModal(element){
+		$('#modal').modal('show')
+			.find('#modalContent')
+			.load($(element).attr('value'))
+	};
 </script>

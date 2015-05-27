@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
  * @property integer $id_divisi
  * @property integer $id_job
  * @property string $last_login
+ * @property string $foto
  *
  * @property CommentBaru[] $commentBarus
  * @property Comment[] $comments
